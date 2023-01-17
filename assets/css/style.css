@@ -1,0 +1,86 @@
+*{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+:root{
+    --color-grey-50:  #e3e1e2;
+    --color-grey-100:  #84848c;
+
+    --color-purple-50:  #6956df;
+    --color-purple-100:  #9080F2;
+    --color-purple-200:  #3238A6;
+
+    --color-blue-100:  #BBE2F2;
+}
+
+body{
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgb(254, 241, 218);
+}
+
+section{
+    width: 500px;
+    height: 500px;
+    box-shadow: 5px 5px 8px rgba(0, 0, 0, 0.392);
+}
+
+#img{
+    background: url('../img/img.png') center center black;
+    background-size: contain;
+}
+
+#form-box{
+    background-color: white;
+    padding: 20px 35px;
+}
+
+#form-box > div{
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+#form-box div h1{
+    font-size: 30px;
+}
+#form-box div button{
+    padding: 5px 10px;
+    background-color: var(--color-purple-200);
+    color: white;
+    border: none;
+    border-radius: 5px;
+}
+
+#form-box div button:hover{
+    background-color:var(--color-purple-50);
+}
+
+#form-box div h1::before{
+    content: "";
+    width: 50px;
+    height: 10px;
+    background-color: var(--color-purple-200);
+}
+
+.column1{grid-area: column1;}
+
+.column2{grid-area: column2;}
+
+.row{grid-area: row;}
+
+form{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-areas: 
+    "column1 column2"
+    "row row"
+}
+
+form div{
+    grid-template-columns: 1fr;
+}
