@@ -171,6 +171,8 @@ form div.row input#submit-form{
         width: min-content;
         padding: 0px;
     }
+
+    form div#div-gender label{margin-left: 5px;}
     
     form div.row input#submit-form{margin: 0px;}
 }
