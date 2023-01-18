@@ -16,47 +16,55 @@
             <button class="button"><a href="#">Sign in</a></button>
         </div>
         <form action="#" method="post">
-            <div class="column column1">
+            <div class="row row-box">
                 <div>
                     <label for="name">First Name</label>
                     <input type="text" id="name" placeholder="Enter your first name" required>
                 </div>
                 <div>
-                    <label for="email">E-mail</label>
-                    <input type="email" id="email" placeholder="Enter your E-mail" required>
-                </div>
-                <div>
-                    <label for="password">Password</label>
-                    <input type="password" id="password" placeholder="Enter your password" required>
-                </div>
-            </div>
-            <div class="column column2">
-                <div>
                     <label for="last-name">Last Name</label>
                     <input type="text" id="last-name" placeholder="Enter your last name" required>
+                </div>
+            </div>
+            <div class="row row-box">
+                <div>
+                    <label for="email">E-mail</label>
+                    <input type="email" id="email" placeholder="Enter your E-mail" required>
                 </div>
                 <div>
                     <label for="number">Phone Number</label>
                     <input type="tel" id="number" placeholder="(xx) xxxxx-xxxx" required>
                 </div>
+            </div>
+            <div class="row row-box">
                 <div>
+                    <label for="password">Password</label>
+                    <input type="password" id="password" placeholder="Enter your password" required>
+                </div>
+                <div class="row4">
                     <label for="confirm-password">Confirm password</label>
                     <input type="text" id="confirm-password" placeholder="Enter your password again" required>
                 </div>
             </div>
+            <div class="row" id="div-gender">
+                <p>Gender</p>
+                <div class="inputs">
+                    <div>
+                        <input type="radio" name="gender" id="feminine" value="feminine">
+                        <label for="feminine">Feminine</label>
+                    </div>
+                    <div>
+                        <input type="radio" name="gender" id="masculine" value="masculine">
+                        <label for="masculine">Masculine</label>
+                    </div>
+                    <div>
+                        <input type="radio" name="gender" id="others" value="others">
+                        <label for="others">Others</label>
+                    </div>
+                </div>
+            </div>
             <div class="row">
-                <div id="div-gender">
-                    <p>Gender</p>
-                    <input type="radio" name="gender" id="feminine" value="feminine">
-                    <label for="feminine">Feminine</label>
-                    <input type="radio" name="gender" id="masculine" value="masculine">
-                    <label for="masculine">Masculine</label>
-                    <input type="radio" name="gender" id="others" value="others">
-                    <label for="others">Others</label>
-                </div>
-                <div>
-                    <input type="submit" value="Submit" id="submit-form" class="button">
-                </div>
+                <input type="submit" value="Submit" id="submit-form" class="button">
             </div>
         </form>
     </section>

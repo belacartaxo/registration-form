@@ -81,25 +81,14 @@ a{
     color: white;
 }
 
-.column1{grid-area: column1;}
+form .row{display: flex;}
 
-.column2{grid-area: column2;}
-
-.row{grid-area: row;}
-
-form{
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    grid-template-areas: 
-    "column1 column2"
-    "row row"
+form div.row div{ 
+    margin-bottom: 5px;
+    padding: 10px;
 }
 
-form div{grid-template-columns: 1fr;}
-
-form div.column div{ margin-bottom: 25px;}
-
-form div.column input{
+form div.row-box input{
     height: 28px;
     width: 200px;
     border: none;
@@ -110,9 +99,23 @@ form div.column input{
     outline: none;
 }
 
-form div.column input:hover{
+form div.row-box input:hover{
     background-color: rgba(238, 238, 238, 0.459);
 }
+
+form div#div-gender{
+    display:flex;
+    flex-direction: column;
+    padding-left: 10px;
+}
+
+form div#div-gender .inputs{
+    display: flex;
+    flex-direction: row;
+    padding: 0px;
+}
+
+form div#div-gender .inputs div{padding: 0px;}
 
 form div#div-gender p { margin-bottom: 3px;}
 
@@ -121,32 +124,53 @@ form div#div-gender label{margin-right: 25px;}
 form div.row input#submit-form{
     width: 100%;
     height: 35px;
-    margin-top: 30px;
+    margin-top: 20px;
 }
 
 @media (min-width: 1100px){
     #img{
         display: block;
-        background: url('../img/img.png') center center no-repeat black;
+        background: url('../img/img.png') center center no-repeat var(--color-purple-50);
         background-size: cover;
     }
 }
 
 @media (max-width: 600px){
+    body{
+        margin: 40px 0px;
+    }
     section{
-        height: 650px;
+        height: 750px;
         width: 85%;
     }
 
-    form{ display: block;}
-    
-    form div.column div{
+    form .row{
         display: flex;
         flex-direction: column;
-        margin-bottom: 15px;
     }
-    form div.column input{width: 100%;}
+    
+    form div.row > div{
+        display: flex;
+        flex-direction: column;
+        padding: 0px;
+        margin-bottom: 20px;
+    }
 
-    form div.row input#submit-form{margin-top: 20px;}
+    form div.row input{width: 100%;}
+    
+    form div#div-gender{padding-left: 0px;}
 
+    form div#div-gender .inputs{
+        display: flex;
+        flex-direction: column;
+    }
+
+    form div.row > div.inputs div{
+        display: flex;
+        flex-direction: row;
+        width: min-content;
+        padding: 0px;
+    }
+    
+    form div.row input#submit-form{margin: 0px;}
 }
