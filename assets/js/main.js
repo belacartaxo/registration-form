@@ -26,21 +26,23 @@ inputLastName.addEventListener('input', ()=>{
 
 inputEmail.addEventListener('input', ()=>{
     let elParent = inputEmail.closest('div');
+    const inputBorder = elParent.querySelector('input');
     if(!emailRegex.test(inputEmail.value)){  
-        createText(elParent, `Invalid email`);
+        createText(elParent, `Invalid email`, inputBorder);
         return;
     } else {
-        removeP(elParent);
+        removeP(elParent, inputBorder);
     }
 })
 
 inputPhoneNumber.addEventListener('input', ()=>{
     let elParent = inputPhoneNumber.closest('div');
+    const inputBorder = elParent.querySelector('input');
     if(!phoneRegex.test(inputPhoneNumber.value)){  
-        createText(elParent, `Invalid phone number`);
+        createText(elParent, `Invalid phone number`, inputBorder);
         return;
     } else {
-        removeP(elParent);
+        removeP(elParent, inputBorder);
     }
 })
 
@@ -50,28 +52,31 @@ inputPassword.addEventListener('input', ()=>{
 
 inputConfirmPassword.addEventListener('input', ()=>{
     let elParent = inputConfirmPassword.closest('div');
+    const inputBorder = elParent.querySelector('input');
     if(inputConfirmPassword !== inputPassword){  
-        createText(elParent, `Passwords need to be the same`);
+        createText(elParent, `Passwords need to be the same`, inputBorder);
         return;
     } else {
-        removeP(elParent);
+        removeP(elParent, inputBorder);
     }
 })
 
 function validate(input, txt, length){
     const valInput = input.value;
     let elParent = input.closest('div');
+    const inputBorder = elParent.querySelector('input');
     if (valInput.length < length) {
-        createText(elParent, txt);
+        createText(elParent, txt, inputBorder);
         return;
     } else {
-        removeP(elParent);
+        removeP(elParent, inputBorder);
     }
 }
 
-function createText(elParent, txt){
+function createText(elParent, txt, inputBorder){
     if (elParent.childElementCount >= 3) return;
     elParent.appendChild(createP(txt));
+    inputBorder.style.border = '1px solid red';
 }
 
 function createP(txt){
@@ -81,9 +86,10 @@ function createP(txt){
     return p
 }
 
-function removeP(elParent){
+function removeP(elParent, inputBorder){
     const p = elParent.querySelector('p.alert');
     elParent.removeChild(p);
+    inputBorder.style.border = 'none';
 }
 
 // EMAIL
