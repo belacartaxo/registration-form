@@ -4,18 +4,27 @@ const inputEmail = document.querySelector('#email');
 const inputPhoneNumber = document.querySelector('#number');
 const inputPassword = document.querySelector('#password');
 const inputConfirmPassword = document.querySelector('#confirm-password');
+const inputGender = document.getElementsByName('gender');
+const submit = document.querySelector('#submit-form')
 
 const emailRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/;
 const phoneRegex = /^(?:(?:\+|00)?(55)\s?)?(?:\(?([1-9][0-9])\)?\s?)?(?:((?:9\d|[2-9])\d{3})\-?(\d{4}))$/;
 
-/*
-    ver se o nome/sobrenome foi digitado e se ele tem pelo menos 3 caracteres
-    validação de email, ver se foi digitado
-    numero de telefone válido
-    senha com no mínimo 8 caracteres, ver se foi digitado
-    repita senhas, compativeis
-    solicitar o gênero
-*/
+submit.addEventListener('click', (event)=>{
+    let elParent = document.querySelector('#div-gender');
+    
+    for (let i of inputGender){
+        if(i.checked === true){
+            removeP(elParent);
+            return
+        }
+    }
+    
+    event.preventDefault();
+    if (elParent.childElementCount >= 3) return;
+    elParent.appendChild(createP('The gender field must be filled in'));
+})
+
 inputName.addEventListener('input', ()=>{
     validate(inputName, `Name must be at least 3 characters`, 3);
 })
@@ -53,8 +62,8 @@ inputPassword.addEventListener('input', ()=>{
 inputConfirmPassword.addEventListener('input', ()=>{
     let elParent = inputConfirmPassword.closest('div');
     const inputBorder = elParent.querySelector('input');
-    if(inputConfirmPassword !== inputPassword){  
-        createText(elParent, `Passwords need to be the same`, inputBorder);
+    if(inputConfirmPassword.value !== inputPassword.value){  
+        createText(elParent, `Passwords must match`, inputBorder);
         return;
     } else {
         removeP(elParent, inputBorder);
@@ -91,7 +100,3 @@ function removeP(elParent, inputBorder){
     elParent.removeChild(p);
     inputBorder.style.border = 'none';
 }
-
-// EMAIL
-
-//PHONE-NUMBER
