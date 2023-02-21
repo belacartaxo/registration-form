@@ -22,8 +22,7 @@ elements.submit.addEventListener('click', (event)=>{
     validValue = inputIsValid();
 
     if (emptyImput !== true && inputGenderValue === true && validValue === true){
-        alert('form enviado')
-        return
+        document.getElementById('registration-form').submit();
     }
     
     event.preventDefault();
