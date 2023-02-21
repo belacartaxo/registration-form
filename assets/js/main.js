@@ -1,85 +1,119 @@
-const inputName = document.querySelector('#name');
-const inputLastName = document.querySelector('#last-name');
-const inputEmail = document.querySelector('#email');
-const inputPhoneNumber = document.querySelector('#number');
-const inputPassword = document.querySelector('#password');
-const inputConfirmPassword = document.querySelector('#confirm-password');
-const inputGender = document.getElementsByName('gender');
-const submit = document.querySelector('#submit-form')
+let validValue = [];
+const inputs = {
+    inputName: document.querySelector('#name'),
+    inputLastName: document.querySelector('#last-name'),
+    inputEmail: document.querySelector('#email'),
+    inputPhoneNumber: document.querySelector('#number'),
+    inputPassword: document.querySelector('#password'),
+    inputConfirmPassword: document.querySelector('#confirm-password'),
+}
 
-const emailRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/;
-const phoneRegex = /^(?:(?:\+|00)?(55)\s?)?(?:\(?([1-9][0-9])\)?\s?)?(?:((?:9\d|[2-9])\d{3})\-?(\d{4}))$/;
+const elements = {
+    inputGender: document.getElementsByName('gender'),
+    submit: document.querySelector('#submit-form'),
+    emailRegex: /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/,
+    phoneRegex: /^(?:(?:\+|00)?(55)\s?)?(?:\(?([1-9][0-9])\)?\s?)?(?:((?:9\d|[2-9])\d{3})\-?(\d{4}))$/
+}
 
-submit.addEventListener('click', (event)=>{
-    let elParent = document.querySelector('#div-gender');
-    
-    for (let i of inputGender){
-        if(i.checked === true){
-            removeP(elParent);
-            return
-        }
+elements.submit.addEventListener('click', (event)=>{
+    const emptyImput = validateEmptyInput();
+    const inputGenderValue = validateInputGender();
+    event.preventDefault();
+    validValue = inputIsValid();
+
+    if (emptyImput !== true && inputGenderValue === true && validValue === true){
+        alert('form enviado')
+        return
     }
     
     event.preventDefault();
-    if (elParent.childElementCount >= 3) return;
-    elParent.appendChild(createP('The gender field must be filled in'));
+    validValue = [];
 })
 
-inputName.addEventListener('input', ()=>{
-    validate(inputName, `Name must be at least 3 characters`, 3);
+inputs.inputName.addEventListener('input', ()=>{
+    validate(inputs.inputName, `Name must be at least 3 characters`, 3, 0);
 })
 
-inputLastName.addEventListener('input', ()=>{
-    validate(inputLastName, `Name must be at least 3 characters`, 3);
+inputs.inputLastName.addEventListener('input', ()=>{
+    validate(inputs.inputLastName, `Name must be at least 3 characters`, 3, 1);
 })
 
-inputEmail.addEventListener('input', ()=>{
-    let elParent = inputEmail.closest('div');
+inputs.inputEmail.addEventListener('input', ()=>{
+    let elParent = inputs.inputEmail.closest('div');
     const inputBorder = elParent.querySelector('input');
-    if(!emailRegex.test(inputEmail.value)){  
+    if(!elements.emailRegex.test(inputs.inputEmail.value)){ 
+        removeP(elParent, inputBorder); 
         createText(elParent, `Invalid email`, inputBorder);
+        validValue[2] = false;
         return;
     } else {
+        validValue[2] = true;
         removeP(elParent, inputBorder);
     }
 })
 
-inputPhoneNumber.addEventListener('input', ()=>{
-    let elParent = inputPhoneNumber.closest('div');
+inputs.inputPhoneNumber.addEventListener('input', ()=>{
+    let elParent = inputs.inputPhoneNumber.closest('div');
     const inputBorder = elParent.querySelector('input');
-    if(!phoneRegex.test(inputPhoneNumber.value)){  
+    if(!elements.phoneRegex.test(inputs.inputPhoneNumber.value)){  
+        removeP(elParent, inputBorder);
         createText(elParent, `Invalid phone number`, inputBorder);
+        validValue[3] = false;
         return;
     } else {
+        validValue[3] = true;
         removeP(elParent, inputBorder);
     }
 })
 
-inputPassword.addEventListener('input', ()=>{
-    validate(inputPassword, `Password must be at least 8 characters`, 8);
+inputs.inputPassword.addEventListener('input', ()=>{
+    validate(inputs.inputPassword, `Password must be at least 8 characters`, 8, 4);
 })
 
-inputConfirmPassword.addEventListener('input', ()=>{
-    let elParent = inputConfirmPassword.closest('div');
+inputs.inputConfirmPassword.addEventListener('input', ()=>{
+    let elParent = inputs.inputConfirmPassword.closest('div');
     const inputBorder = elParent.querySelector('input');
-    if(inputConfirmPassword.value !== inputPassword.value){  
-        createText(elParent, `Passwords must match`, inputBorder);
+    const valInputConfirmPassword = inputs.inputConfirmPassword.value
+    if(valInputConfirmPassword !== inputs.inputPassword.value || valInputConfirmPassword.length < 8){  
+        removeP(elParent, inputBorder);
+        createText(elParent, `Passwords must match and be at least 8 characters`, inputBorder);
+        validValue[5] = false;
         return;
     } else {
+        validValue[5] = true;
         removeP(elParent, inputBorder);
     }
 })
 
-function validate(input, txt, length){
+function validate(input, txt, length, i){
     const valInput = input.value;
     let elParent = input.closest('div');
     const inputBorder = elParent.querySelector('input');
     if (valInput.length < length) {
+        removeP(elParent, inputBorder);
         createText(elParent, txt, inputBorder);
+        validValue[i] = false;
         return;
     } else {
+        validValue[i] = true;
         removeP(elParent, inputBorder);
     }
+}
+
+function validateInputGender(){
+    let elParent = document.querySelector('#div-gender');
+    let checked = false;
+    if (elParent.childElementCount < 3) {
+        elParent.appendChild(createP('The gender field must be filled in'));
+    }
+
+    for (let i of elements.inputGender){
+        if(i.checked === true){
+            checked = true;
+            removeP(elParent, undefined);
+        }
+    }
+    return checked;
 }
 
 function createText(elParent, txt, inputBorder){
@@ -96,7 +130,33 @@ function createP(txt){
 }
 
 function removeP(elParent, inputBorder){
+    if(elParent.getElementsByTagName('p').length===0) return;
     const p = elParent.querySelector('p.alert');
     elParent.removeChild(p);
-    inputBorder.style.border = 'none';
+    if (inputBorder !== undefined) inputBorder.style.border = 'none';
+}
+
+function validateEmptyInput(){
+    let empty = false
+    for(let inp in inputs){
+        let value = inputs[inp].value;
+        value = value.trim()
+        if(value.length === 0){
+            let elParent = inputs[inp].closest('div');
+            const inputBorder = elParent.querySelector('input');
+            createText(elParent, `Empty field`, inputBorder);
+            empty = true;
+        }
+    }
+    return empty;
+}
+
+function inputIsValid(){
+    if (typeof validValue === 'object'){
+        for(let i of validValue){
+        if (validValue === false){
+            return false;
+        }
+    }}
+    return true;
 }
