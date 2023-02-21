@@ -18,15 +18,12 @@ const elements = {
 elements.submit.addEventListener('click', (event)=>{
     const emptyImput = validateEmptyInput();
     const inputGenderValue = validateInputGender();
+    const resultValidValue = inputIsValid();
     event.preventDefault();
-    validValue = inputIsValid();
 
-    if (emptyImput !== true && inputGenderValue === true && validValue === true){
+    if (emptyImput !== true && inputGenderValue === true && resultValidValue === true){
         document.getElementById('registration-form').submit();
     }
-    
-    event.preventDefault();
-    validValue = [];
 })
 
 inputs.inputName.addEventListener('input', ()=>{
@@ -151,11 +148,13 @@ function validateEmptyInput(){
 }
 
 function inputIsValid(){
+    if (validValue.length === 0) return false;
     if (typeof validValue === 'object'){
         for(let i of validValue){
-        if (validValue === false){
-            return false;
+            if (i !== true){
+                return false;
+            }
         }
-    }}
+    }
     return true;
 }
